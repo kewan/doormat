@@ -30,3 +30,6 @@ module Doormat
   end
 
 end
+
+# rails hook app/mats dir
+require 'doormat/rails' if defined?(::Rails::Engine)
