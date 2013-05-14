@@ -17,7 +17,8 @@ module Doormat
   end
 
   module ClassMethods
-    def field(to, from, options={}, &block)
+    def field(to, options={}, &block)
+      from    = options[:source]  || to.to_s
       type    = options[:type]    || :string
       default = options[:default] || ''
 

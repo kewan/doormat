@@ -14,22 +14,22 @@ describe Doormat::Field do
 
     it "maps to a field that exists in the supplied data" do
       field = Doormat::Field.new(:name, 'SomeName', :string, "")
-      field.map(@data).should == @data['SomeName']
+      field.map(@data).should eq @data['SomeName']
     end
 
     it "maps to default if not supplied in data" do
       field = Doormat::Field.new(:currency, 'Currency', :string, 'GBP')
-      field.map(@data).should == 'GBP'
+      field.map(@data).should eq 'GBP'
     end
 
     it "maps to the supplied type" do
       field = Doormat::Field.new(:id, 'product_id', :integer)
-      field.map(@data).should == @data['product_id'].to_i
+      field.map(@data).should eq @data['product_id'].to_i
     end
 
     it "maps to the suppied field using a block to determine value" do
       field = Doormat::Field.new(:image_url, 'ImageUrl', :string, '') { |url| url.gsub!(/example/, 'monkey') }
-      field.map(@data).should == 'http://www.monkey.com/this.jpg'
+      field.map(@data).should eq 'http://www.monkey.com/this.jpg'
     end
 
   end

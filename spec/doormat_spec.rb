@@ -5,10 +5,11 @@ module Shop
   class Product
     include Doormat
 
-    field :id, 'SomeID'
-    field :price, 'ThePrice', type: :float
-    field :currency, 'Currency', type: :string, default: 'GBP'
-    field :reverse_image, 'ImageURL', type: :string, default: 'GBP' do |url|
+    field :name
+    field :id, source: 'SomeID'
+    field :price, source: 'ThePrice', type: :float
+    field :currency, source: 'Currency', type: :string, default: 'GBP'
+    field :reverse_image, source: 'ImageURL', type: :string, default: 'GBP' do |url|
       url.reverse
     end
   end
@@ -20,9 +21,10 @@ describe Doormat do
   before(:each) do
     @product = Shop::Product.new
     @data = {
-      'SomeID' => '1234',
+      'SomeID'   => '1234',
       'ThePrice' => '450.00',
-      'ImageURL' => 'http://example.com/12345-some-text.jpg'
+      'ImageURL' => 'http://example.com/12345-some-text.jpg',
+      'name'     => 'kewan'
     }
 
     @product.parse(@data)
@@ -32,27 +34,32 @@ describe Doormat do
 
     it "maps the field" do
       fields = @product.class.instance_variable_get(:@mapped_fields)
-      fields.count.should == 4
-      fields.has_key?(:id).should == true
-      fields.has_key?(:price).should == true
-      fields.has_key?(:currency).should == true
-      fields.has_key?(:reverse_image).should == true
+      fields.count.should eq 5
+      fields.should have_key(:name)
+      fields.should have_key(:id)
+      fields.should have_key(:price)
+      fields.should have_key(:currency)
+      fields.should have_key(:reverse_image)
     end
 
   end
 
   describe "parse" do
 
+    it "parses the data with defualt source name being same as to name" do
+      @product.name.should eq @data['name']
+    end
+
     it "parses the data to the correct variable" do
-      @product.id.should == '1234'
+      @product.id.should eq @data['SomeID']
     end
 
     it "parses the data to the correct variable with the correct type" do
-      @product.price.should == 450.0
+      @product.price.should eq @data['ThePrice'].to_f
     end
 
     it "parses to default if not available in data" do
-      @product.currency.should == 'GBP'
+      @product.currency.should eq 'GBP'
     end
 
     it "parses using the block to format value" do
