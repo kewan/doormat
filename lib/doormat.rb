@@ -8,7 +8,15 @@ module Doormat
     fields.each_value do |field|
       send("#{field.to}=", field.map(data))
     end
+  end
 
+  def to_hash
+    fields = self.class.instance_variable_get(:@mapped_fields)
+    values = Hash.new
+    fields.each_value do |field|
+      values[field.to.to_sym] = send("#{field.to}")
+    end
+    values
   end
 
   def self.included(base)

@@ -68,4 +68,18 @@ describe Doormat do
 
   end
 
+  describe "to_hash" do
+
+    it "converst mapped fileds to hash" do
+      product_hash = @product.to_hash
+      product_hash.count.should eq 5
+      product_hash[:id].should eq @product.id
+      product_hash[:name].should eq @product.name
+      product_hash[:price].should eq @product.price
+      product_hash[:currency].should eq @product.currency
+      product_hash[:reverse_image].should eq @product.reverse_image
+    end
+
+  end
+
 end
