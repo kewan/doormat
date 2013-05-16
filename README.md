@@ -1,6 +1,8 @@
-# Doormat
+# Doormat [![Build Status](https://travis-ci.org/kewan/doormat.png?branch=master)](https://travis-ci.org/kewan/doormat)
 
-TODO: Write a gem description
+*NB: This is a work in progress and not ready for use in production apps.*
+
+TODO: Write a description
 
 ## Installation
 
