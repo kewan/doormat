@@ -66,6 +66,10 @@ describe Doormat do
       @product.reverse_image.should == @data['ImageURL'].reverse
     end
 
+    it "returns self after passing to allow method chaining" do
+      @product.parse(@data).should eq @product
+    end
+
   end
 
   describe "to_hash" do

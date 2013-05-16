@@ -9,6 +9,7 @@ module Doormat
     fields.each_value do |field|
       send("#{field.to}=", field.map(data))
     end
+    self
   end
 
   def to_hash
